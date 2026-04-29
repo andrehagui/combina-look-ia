@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combina Look IA</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <h1>👗 Combina Look IA</h1>
+        <p>Seu look analisado com inteligência.</p>
+
+    <form method="POST" enctype="multipart/form-data" class="upload-form">
+    <label for="foto" class="custom-file-button">
+        📸 Tirar foto / Escolher imagem
+    </label>
+
+    <input
+        id="foto"
+        type="file"
+        name="foto"
+        accept="image/*"
+        hidden
+    >
+
+    <div id="preview-area">
+        <img id="preview" src="" alt="Prévia da imagem">
+    </div>
+
+    <br>
+
+    <button type="submit">✨ Analisar Look</button>
+</form>    
+
+        {% if imagem %}
+            <h3>Foto enviada:</h3>
+            <img src="{{ url_for('static', filename='uploads/' + imagem) }}" width="250">
+        {% endif %}
+
+        {% if nota %}
+            <div class="resultado">
+                <h2>Resultado do Look</h2>
+
+                <p class="nota">⭐ Nota: {{ nota }}/10</p>
+                <p>🎨 <strong>Cores:</strong> {{ cores }}</p>
+                <p>👔 <strong>Estilo:</strong> {{ estilo }}</p>
+                <p>📍 <strong>Ocasião:</strong> {{ ocasiao }}</p>
+                <p>💬 {{ comentario }}</p>
+                <p>💡 <strong>Sugestão:</strong> {{ sugestao }}</p>
+            </div>
+        {% endif %}
+    </div>
+<script>
+const fotoInput = document.getElementById("foto");
+const preview = document.getElementById("preview");
+
+fotoInput.addEventListener("change", function () {
+    const arquivo = this.files[0];
+
+    if (arquivo) {
+        preview.src = URL.createObjectURL(arquivo);
+        preview.style.display = "block";
+    }
+});
+</script>
+</body>
+</html>
