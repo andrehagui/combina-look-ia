@@ -13,7 +13,6 @@ def analisar_look(caminho_imagem):
 
     largura, altura = imagem.size
 
-    # recorta região central (onde geralmente está a roupa)
     esquerda = largura * 0.2
     topo = altura * 0.15
     direita = largura * 0.8
@@ -36,10 +35,22 @@ def analisar_look(caminho_imagem):
         + abs(media_g - media_b)
     )
 
-    neutro = False
-
+    # detectar paleta
     if abs(media_r - media_g) < 20 and abs(media_g - media_b) < 20:
+        paleta = "Neutra elegante"
         neutro = True
+    elif media_r > media_g and media_r > media_b:
+        paleta = "Vermelhos / quentes"
+        neutro = False
+    elif media_g > media_r and media_g > media_b:
+        paleta = "Verdes / naturais"
+        neutro = False
+    elif media_b > media_r and media_b > media_g:
+        paleta = "Azuis / frios"
+        neutro = False
+    else:
+        paleta = "Mista"
+        neutro = False
 
     nota = 6.5
 
@@ -62,28 +73,28 @@ def analisar_look(caminho_imagem):
 
     if nota >= 9:
         comentario = "Combinação refinada e muito harmoniosa."
-        cores = "Excelente"
+        cores = f"{paleta}"
         estilo = "Elegante premium"
         ocasiao = "Evento / social"
         sugestao = "Look muito bem construído."
 
     elif nota >= 8:
         comentario = "Boa harmonia visual e ótimo equilíbrio."
-        cores = "Boas"
+        cores = f"{paleta}"
         estilo = "Casual elegante"
         ocasiao = "Uso versátil"
         sugestao = "Acessórios podem elevar ainda mais."
 
     elif nota >= 7:
         comentario = "Combinação boa, mas há espaço para melhorar."
-        cores = "Razoáveis"
+        cores = f"{paleta}"
         estilo = "Casual"
         ocasiao = "Dia a dia"
         sugestao = "Uma peça neutra pode equilibrar melhor."
 
     else:
         comentario = "Combinação fraca ou visualmente carregada."
-        cores = "Pouco harmoniosas"
+        cores = f"{paleta}"
         estilo = "Desalinhado"
         ocasiao = "Indefinida"
         sugestao = "Simplificar a paleta pode melhorar bastante."
